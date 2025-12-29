@@ -2,7 +2,20 @@ import os
 import telebot
 import random
 import re
-from telebot import types
+from flask import Flask
+import threading
+
+app = Flask('')
+
+@app.route('/')
+def home():
+    return "OK"
+
+def keep_alive():
+    app.run(host='0.0.0.0', port=8080)
+
+threading.Thread(target=keep_alive).start()
+
 
 TOKEN = os.getenv("TOKEN")
 if not TOKEN:
@@ -82,4 +95,5 @@ def send_word(message):
 # ===== ЗАПУСК =====
 
 bot.infinity_polling(skip_pending=True)
+
 
